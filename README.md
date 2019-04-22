@@ -3,6 +3,12 @@
 The main purpose of the tool is calculating the differences between two jsons, 
 and return a json format result.
 
+code reference: [jsondiff](https://github.com/nsf/jsondiff)
+
+The standard library nsf/jsondiff can return readable and colorful
+json diff results for console and html, but what I need is a json
+format result, so I reformed the library. 
+
 TEST
 
 ```
