@@ -3,6 +3,7 @@ package jsonDiff
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"log"
 	"reflect"
 	"sort"
@@ -254,7 +255,7 @@ func (ctx *context) calculateDiff(a, b interface{}) {
 	ctx.writeValue(a, true, "")
 	ctx.result(FullMatch)
 }
-func Compare(a, b []byte) (Difference, interface{}) {
+func Compare(a, b []byte) ([]byte, error) {
 	var av, bv interface{}
 	da := json.NewDecoder(bytes.NewReader(a))
 	da.UseNumber()
@@ -263,13 +264,13 @@ func Compare(a, b []byte) (Difference, interface{}) {
 	errA := da.Decode(&av)
 	errB := db.Decode(&bv)
 	if errA != nil && errB != nil {
-		return BothArgsAreInvalidJson, "both arguments are invalid json"
+		return nil, errors.New("BothArgsAreInvalidJson both arguments are invalid json")
 	}
 	if errA != nil {
-		return FirstArgIsInvalidJson, "first argument is invalid json"
+		return nil, errors.New("FirstArgIsInvalidJson first argument is invalid json")
 	}
 	if errB != nil {
-		return SecondArgIsInvalidJson, "second argument is invalid json"
+		return nil, errors.New("SecondArgIsInvalidJson second argument is invalid json")
 	}
 
 	ctx := context{
@@ -282,6 +283,8 @@ func Compare(a, b []byte) (Difference, interface{}) {
 	err := json.Unmarshal(diff, &diff1)
 	if err != nil {
 		log.Fatalln("结果json.unmarshal 失败：", err)
+	}else{
+		//fmt.Println("解析之后的", diff1)
 	}
-	return ctx.diff, diff1
+	return diff, nil
 }

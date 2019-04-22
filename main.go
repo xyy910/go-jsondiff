@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"testjsondiff/jsonDiff"
+	"go-jsondiff/jsonDiff"
 )
 
 func main()  {
@@ -15,7 +15,7 @@ func main()  {
 	}
 	b1 := map[string]interface{}{
 		"hoby": "dance",
-		"money": "多多",
+		"milk": "多多",
 		"disanceng": c1,
 	}
 	a1 := map[string]interface{}{
@@ -33,14 +33,14 @@ func main()  {
 	}
 	b2 := map[string]interface{}{
 		"hoby": "chifan",
-		"money": "不多",
+		"milk": "不多",
 		"disanceng": c2,
 	}
 
 	a2 := map[string]interface{}{
 		"xyff": "aichifan",
 		"xyf": b2,
-		"hahahh": "啊啊啊啊",
+		"hahaha": "笑点低",
 		"same": "same",
 		"list": []string{"a", "n", "c"},
 	}
@@ -55,8 +55,8 @@ func main()  {
 		log.Fatalln("l2", err)
 	}
 
-	_, text := jsonDiff.Compare(l1, l2)
-	fmt.Println("这是diff:", text)
+	text, _ := jsonDiff.Compare(l1, l2)
+	fmt.Println("这是diff:", string(text))
 }
 
 
